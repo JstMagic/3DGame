@@ -39,7 +39,7 @@ public class MainGameLoop {
 
         RawModel model = loader.loadToVAO(vertices);
 
-        while (Display.isCloseRequested()){
+        while (!Display.isCloseRequested()){
             renderer.prepare();
             renderer.render(model);
             DisplayManager.updateDisplay();
