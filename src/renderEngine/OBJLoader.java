@@ -43,7 +43,7 @@ public class OBJLoader {
                             Float.parseFloat(currentLine[3]));
                     vertices.add(vertex);
 
-                } else if (line.startsWith("vn ")) {
+                } else if (line.startsWith("vt ")) {
                     Vector2f texture = new Vector2f(
                             Float.parseFloat(currentLine[1]),
                             Float.parseFloat(currentLine[2]));
@@ -57,7 +57,7 @@ public class OBJLoader {
                     normals.add(normal);
                 } else if (line.startsWith("f ")) {
                     texturesArray = new float[vertices.size() * 2];
-                    normalsArray = new float[vertices.size() * 2];
+                    normalsArray = new float[vertices.size() * 3];
                     break;
                 }
             }
@@ -73,10 +73,31 @@ public class OBJLoader {
                 String[] vertex3 = currentLine[3].split("/");
 
                 processVertex(vertex1,indices,textures,normals,texturesArray,normalsArray);
+                processVertex(vertex2,indices,textures,normals,texturesArray,normalsArray);
+                processVertex(vertex3,indices,textures,normals,texturesArray,normalsArray);
+                line = reader.readLine();
             }
+            reader.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        verticesArray = new float[vertices.size() * 3];
+        indicesArray = new int[indices.size()];
+
+        int vertexPointer = 0;
+
+        for(Vector3f vertex : vertices){
+            verticesArray[vertexPointer++] = vertex.x;
+            verticesArray[vertexPointer++] = vertex.y;
+            verticesArray[vertexPointer++] = vertex.z;
+        }
+
+        for(int i = 0; i < indices.size(); i++){
+            indicesArray[i] = indices.get(i);
+        }
+        return loader.loadToVAO(verticesArray, texturesArray, indicesArray);
     }
 
     private static void processVertex(String[] vertexData, List<Integer> indices, List<Vector2f> textures,
