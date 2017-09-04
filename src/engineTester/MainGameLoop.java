@@ -116,9 +116,12 @@ public class MainGameLoop {
 
 //        RawModel model = loader.loadToVAO(vertices, textureCoords, indices);
 
-        RawModel model = OBJLoader.loadOBJModel("dragon", loader);
+        RawModel model = OBJLoader.loadOBJModel("stall", loader);
 
-        TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("dragonSkin")));
+        TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("stallTexture")));
+        ModelTexture texture = staticModel.getTexture();
+        texture.setShineDamper(10);
+        texture.setReflectivity(1);
 
         Entity entity = new Entity(staticModel, new Vector3f(0,-1,-10),0,0,0,1);
 
