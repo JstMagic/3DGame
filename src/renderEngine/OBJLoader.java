@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class OBJLoader {
 
-    public static RawModel loadOBJModel(String fileName, Loader loader) {
+    public static RawModel loadObjModel(String fileName, Loader loader) {
         FileReader fileReader = null;
         try {
             fileReader = new FileReader(new File("res/" + fileName + ".obj"));
@@ -104,13 +104,15 @@ public class OBJLoader {
                                       List<Vector3f> normals, float[] texturesArray, float[] normalsArray) {
         int currentVertexPointer = Integer.parseInt(vertexData[0]) -1;
         indices.add(currentVertexPointer);
-        Vector2f currentTex = textures.get(Integer.parseInt(vertexData[1])-1);
-        texturesArray[currentVertexPointer * 2] = currentTex.x;
-        texturesArray[currentVertexPointer * 2+1] = 1 - currentTex.y;
-        Vector3f currentNorm = normals.get(Integer.parseInt(vertexData[2])-1);
-        normalsArray[currentVertexPointer * 3]   = currentNorm.x;
-        normalsArray[currentVertexPointer * 3+1] = currentNorm.y;
-        normalsArray[currentVertexPointer * 3+2] = currentNorm.z;
+        if(textures.size() > 0) {
+            Vector2f currentTex = textures.get(Integer.parseInt(vertexData[1]) - 1);
+            texturesArray[currentVertexPointer * 2] = currentTex.x;
+            texturesArray[currentVertexPointer * 2 + 1] = 1 - currentTex.y;
+            Vector3f currentNorm = normals.get(Integer.parseInt(vertexData[2]) - 1);
+            normalsArray[currentVertexPointer * 3] = currentNorm.x;
+            normalsArray[currentVertexPointer * 3 + 1] = currentNorm.y;
+            normalsArray[currentVertexPointer * 3 + 2] = currentNorm.z;
+        }
     }
 
 }

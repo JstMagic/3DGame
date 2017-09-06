@@ -6,10 +6,9 @@ import org.lwjgl.util.vector.Matrix4f;
 import toolbox.Maths;
 
 /**
- * Created by root on 9/2/17.
+ * Created by ubuntu on 9/5/17.
  */
-public class StaticShader extends ShaderProgram {
-
+public class TerrainShader extends ShaderProgram{
     private int location_transformationMatrix;
     private int location_projectionMatrix;
     private int location_viewMatrix;
@@ -18,8 +17,9 @@ public class StaticShader extends ShaderProgram {
     private int location_shineDamper;
     private int location_reflectivity;
 
-    public StaticShader(){
-        super("vertexShader.vs", "fragmentShader.vs");
+    public TerrainShader(){
+
+        super("terrainVertexShader.vs", "terrainFragmentShader.vs");
     }
 
     @Override
