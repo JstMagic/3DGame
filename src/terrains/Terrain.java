@@ -4,6 +4,8 @@ import com.sun.org.apache.xpath.internal.operations.Mod;
 import models.RawModel;
 import renderEngine.Loader;
 import textures.ModelTexture;
+import textures.TerrainTexture;
+import textures.TerrainTexturePack;
 
 /**
  * Created by ubuntu on 9/5/17.
@@ -16,13 +18,35 @@ public class Terrain {
     private  float x;
     private  float z;
     private RawModel model;
-    private ModelTexture texture;
+    private TerrainTexturePack texturePack;
+    private TerrainTexture blendMap;
 
-    public Terrain (int gridX, int gridZ, Loader loader, ModelTexture texture){
-        this.texture = texture;
+    public Terrain (int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack, TerrainTexture blendMap){
+        this.texturePack = texturePack;
+        this.blendMap = blendMap;
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
         this.model = generateTerrain(loader);
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getZ() {
+        return z;
+    }
+
+    public RawModel getModel() {
+        return model;
+    }
+
+    public TerrainTexturePack getTexturePack() {
+        return texturePack;
+    }
+
+    public TerrainTexture getBlendMap() {
+        return blendMap;
     }
 
     private RawModel generateTerrain(Loader loader){
@@ -61,21 +85,5 @@ public class Terrain {
             }
         }
         return loader.loadToVAO(vertices, textureCoords, normals, indices);
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public float getZ() {
-        return z;
-    }
-
-    public RawModel getModel() {
-        return model;
-    }
-
-    public ModelTexture getTexture() {
-        return texture;
     }
 }

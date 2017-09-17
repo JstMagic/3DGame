@@ -96,6 +96,7 @@ public class MasterRenderer {
         shader.cleanUp();
         terrainShader.cleanUp();
     }
+    
 
     public void prepare() {
         GL11.glEnable(GL11.GL_DEPTH_TEST);

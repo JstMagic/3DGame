@@ -12,6 +12,8 @@ import renderEngine.*;
 import models.RawModel;
 import terrains.Terrain;
 import textures.ModelTexture;
+import textures.TerrainTexture;
+import textures.TerrainTexturePack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,19 @@ public class MainGameLoop {
          * game logic
          */
         Loader loader = new Loader();
+
+        //***********TERRAIN TEXTURE STUFF***********
+
+        TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grassy"));
+        TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("dirt"));
+        TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("grass"));
+        TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("path"));
+
+        TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+        TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
+
+        //*******************************************
+
         ModelData data = OBJFileLoader.loadOBJ("tree");
         RawModel treeModel = loader.loadToVAO(data.getVertices(), data.getTextureCoords(),
                 data.getNormals(), data.getIndices());
@@ -70,13 +85,8 @@ public class MainGameLoop {
         Light light = new Light(new Vector3f(20000,20000,2000),new Vector3f(1,1,1));
 
 
-        Terrain terrain = new Terrain(0,-1,loader,new ModelTexture(loader.loadTexture("grass")));
-        terrain.getTexture().setShineDamper(10);
-        terrain.getTexture().setReflectivity(1);
-
-        Terrain terrain2 = new Terrain(-1,-1,loader,new ModelTexture(loader.loadTexture("grass")));
-        terrain2.getTexture().setShineDamper(10);
-        terrain2.getTexture().setReflectivity(1);
+        Terrain terrain = new Terrain(0,-1,loader, texturePack, blendMap);
+        Terrain terrain2 = new Terrain(-1,-1,loader, texturePack, blendMap);
 
         Camera camera = new Camera();
         MasterRenderer renderer = new MasterRenderer();
